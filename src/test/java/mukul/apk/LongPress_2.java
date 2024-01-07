@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.ImmutableMap;
@@ -25,12 +26,13 @@ public class LongPress_2 extends BaseTest {
 		WebElement ele = driver.findElement(By.xpath("//android.widget.TextView[@text='People Names']"));
 //		((JavascriptExecutor) driver).executeScript("mobile: longClickGesture",
 //				ImmutableMap.of("elementID",((RemoteWebElement) ele).getId(),"duration",2000));
-		((JavascriptExecutor) driver).executeScript("mobile: longClickGesture",
-			    ImmutableMap.of("elementID", ((RemoteWebElement) ele).getId(),
-			            "x", ele.getLocation().getX() + ele.getSize().getWidth() / 2,
-			            "y", ele.getLocation().getY() + ele.getSize().getHeight() / 2,
-			            "duration", 2000));
-
+		longPress(ele);
+		
+		String menuText = driver.findElement(By.xpath("//android.widget.TextView[@resource-id='android:id/title']")).
+				getText();
+		
+		Assert.assertTrue(driver.findElement(By.xpath("//android.widget.TextView[@resource-id='android:id/title']")).isDisplayed());
+		Assert.assertEquals(menuText, "Sample menu");
 	
 		Thread.sleep(2000);
 	}
